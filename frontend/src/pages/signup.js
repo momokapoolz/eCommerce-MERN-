@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 
 import loginIcon from '../assets/loginIcon.png';
 
-import { VscAccount } from "react-icons/vsc";
+//import { VscAccount } from "react-icons/vsc";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { toast } from 'react-toastify'
 
 import imageToBase64 from '../helpers/imageToBase64'
+
+import summaryAPI from '../common/api';
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -21,6 +24,9 @@ const Signup = () => {
         profilePic: ""
     })
 
+    const navigate = useNavigate()
+
+
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setData((preve) => {
@@ -33,9 +39,38 @@ const Signup = () => {
 
     console.log(data)
 
-    const handleSubmit = (e) => {
+    //commnunicate with backend
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (data.confirm_password == data.password) {
+            const dataRespone = await fetch(summaryAPI.signUp.url, {
+                method: summaryAPI.signUp.method,
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+
+            const dataApi = await dataRespone.json()
+
+            if (dataApi.success) {
+                toast.success(dataApi.message)
+                navigate("/login")
+            }
+
+            if (dataApi.error) {
+                toast.error(dataApi.message)
+            }
+
+            console.log(dataApi)
+        } else {
+            toast.error("Invalid confirm password")
+            console.log("Invalid confirm password")
+        }
+
     }
+
 
 
     const handleUploadPic = async (e) => {
