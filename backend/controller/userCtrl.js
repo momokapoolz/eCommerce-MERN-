@@ -22,6 +22,7 @@ async function signUp(req, res) {
             }
             const payload = {
                 ...req.body,
+                role: "General",
                 password: hashpassword
             }
 
@@ -83,6 +84,7 @@ async function LogIn(req,res) {
                     secure: true
                 }
 
+                //tao ra cookie tren browser, "token" la ten cua token
                 res.cookie("token", token, tokenOption).json({
                     //data : saveUser,
                     data: token,
@@ -102,8 +104,81 @@ async function LogIn(req,res) {
 
 async function UserDetail (req, res) {
     try {
-        console.log("userID: ", req._id)
+        console.log("userId",req.userId)
+        const user = await userModel.findById(req.userId)
 
+        res.status(200).json({
+            data: user,
+            error: false,
+            success: true,
+            message: "User detail"
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+async function LogOut (req, res) {
+    try {
+        res.clearCookie("token")
+
+        res.json({
+            data: [], 
+            error: false,  
+            success: true,  
+            message: 'Logout Successfully'
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+async function getAllUser (req, res) {
+    try {
+        console.log("get all user")
+
+        const allUser = await userModel.find()
+
+        res.json({
+            data: allUser, 
+            error: false,  
+            success: true,  
+            message: 'Logout Successfully'
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+async function updateUser (req, res) {
+    try {
+        const sessionUser = req.userId
+
+        const {userId, name, email, role} = req.body
+
+        const payload = {
+            ...( email && { email : email}),
+            ...( name && { name : name}),
+            ...( role && { role : role}),
+        }
+
+        const user = await userModel.findById(sessionUser)
+
+        console.log("user role", user.role)
+
+        const updateUser = await userModel.findByIdAndUpdate(userId, payload)
+
+        res.json({
+            data: updateUser, 
+            error: false,  
+            success: true,  
+            message: 'Logout Successfully'
+        })
 
     } catch (error) {
         console.log(error)
@@ -113,10 +188,4 @@ async function UserDetail (req, res) {
 
 
 
-
-
-
-
-
-
-module.exports = { signUp, LogIn, UserDetail};
+module.exports = { signUp, LogIn, UserDetail, LogOut, getAllUser, updateUser};

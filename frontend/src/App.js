@@ -9,8 +9,13 @@ import Footer from './components/Footer'
 
 import summaryAPI from './common/api';
 
+import {useDispatch} from 'react-redux'
+import { setUserDetails } from './store/userSlice';
+
 
 function App() {
+
+  const dispatch = useDispatch()
 
   const fetchUserDetails = async() => {
     const dataRespone = await fetch(summaryAPI.Current_User.url, {
@@ -19,6 +24,10 @@ function App() {
     })
 
     const dataApi = await dataRespone.json()
+
+    if(dataApi.success){
+      dispatch(setUserDetails(dataApi.data))
+    }
 
     console.log("data-user", dataApi)
   }

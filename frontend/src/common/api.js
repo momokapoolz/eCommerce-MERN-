@@ -13,6 +13,18 @@ const summaryAPI = {
     Current_User: {
         url: `${backendDomain}/api/user-detail`,
         method: "get"
+    },
+    LogOut: {
+        url:`${backendDomain}/api/user-logout`,
+        method:"get"
+    },
+    getAllUser: {
+        url:`${backendDomain}/api/all-users`,
+        method:"get"
+    },
+    updateUser: {
+        url: `${backendDomain}/api/update-user`,
+        method: "put",
     }
 }
 

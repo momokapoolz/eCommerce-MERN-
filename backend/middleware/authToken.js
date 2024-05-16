@@ -16,14 +16,19 @@ async function authToken (req, res, next) {
                 console.log(err)
             }
 
-            //req.userId = decoded?._id
+            req.userId = decoded?._id
             
             next()
         })
 
         console.log("token", token)
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            message : err.message || err,
+            data : [],
+            error : true,
+            success : false
+        })
     }
 }
 

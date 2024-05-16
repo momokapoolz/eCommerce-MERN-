@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
     name:{
         type: String,
     },
-    profilePic: String
+    profilePic: String,
+    role: String
 })
 
 const userModel = mongoose.model("User", userSchema)
