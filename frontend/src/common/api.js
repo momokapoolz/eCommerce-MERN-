@@ -25,7 +25,20 @@ const summaryAPI = {
     updateUser: {
         url: `${backendDomain}/api/update-user`,
         method: "put",
+    },
+    uploadProduct: {
+        url: `${backendDomain}/api/upload-product`,
+        method: "post",
+    },
+    updateProduct: {
+        url: `${backendDomain}/api/update-product`,
+        method: "put",
+    },
+    allProducts:{
+        url: `${backendDomain}/api/all-products`,
+        method: "get",
     }
+    
 }
 
 export default summaryAPI
