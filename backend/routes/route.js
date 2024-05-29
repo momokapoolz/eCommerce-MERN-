@@ -17,7 +17,7 @@ router.get("/all-users", getAllUser)
 router.put("/update-user", authToken, updateUser)
 
 //product
-router.post("upload-product", authToken, uploadProduct)
+router.post("/upload-product", authToken, uploadProduct)
 router.put("/update-product", authToken, updateProduct)
 router.get("/all-products", allproduct)
 

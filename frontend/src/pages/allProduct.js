@@ -108,7 +108,11 @@ const AllProducts = () => {
                 openAddProducts && (
                     <UploadProduct
                         onClose={() => setOpenAddProducts(false)}
-                    
+                        name={updateProductDetails.name}
+                        category={updateProductDetails.category}
+                        brand={updateProductDetails.brand}
+                        price={updateProductDetails.price}
+                        callFunc={fetchAllProduct}
                     />
                 )
             }

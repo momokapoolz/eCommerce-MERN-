@@ -37,6 +37,7 @@ const Signup = () => {
         })
     }
 
+    
     console.log(data)
 
     //commnunicate with backend

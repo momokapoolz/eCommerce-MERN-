@@ -8,7 +8,7 @@ async function uploadProduct(req, res) {
 
         const user = await userModel.findById(sessionUser)
 
-        if (user.role === 'ADMIN') {
+        if (user.role === 'Admin') {
             const { name, brand, category, price, productImage } = req.body
 
             const payload = {
