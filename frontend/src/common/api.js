@@ -37,7 +37,12 @@ const summaryAPI = {
     allProducts:{
         url: `${backendDomain}/api/all-products`,
         method: "get",
-    }
+    },
+    getProductByCategory:{
+        url: `${backendDomain}/api/get-product-by-category`,
+        method: 'get'
+    },
+    
     
 }
 

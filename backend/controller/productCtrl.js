@@ -99,4 +99,31 @@ async function allproduct(req, res){
     }
 }
 
-module.exports = { uploadProduct, updateProduct , allproduct}
+
+async function getAllProductsWithCategory(req, res){
+    try {
+        const productCategory = await productModel.distinct("category")
+
+        const productByCategory = []
+
+        for(const category of productCategory){
+            const product = await productModel.findOne({category: category})
+            if(product){
+                productByCategory.push()
+            }
+        }
+
+        res.json({
+            data: productByCategory,
+            success: true,
+            error: false,
+        })
+
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { uploadProduct, updateProduct , allproduct, getAllProductsWithCategory}

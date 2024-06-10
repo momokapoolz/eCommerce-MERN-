@@ -10,7 +10,7 @@ import UpdateProduct from '../components/updateProduct'
 
 import UploadProduct from '../components/uploadProduct'
 
-const AllProducts = () => {
+const AllProducts = (fetchData) => {
 
     const [allProducts, setProducts] = useState([])
     const [openUpdateProducts, setOpenUpdateProducts] = useState(false)
@@ -34,6 +34,7 @@ const AllProducts = () => {
 
         if (data.success) {
             setProducts(data.data); // day chinh la ly do tai sao all user o duoi html lai dung duoc
+            fetchData()
         }
 
         if (data.error) {
