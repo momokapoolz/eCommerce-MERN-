@@ -13,7 +13,7 @@ require('dotenv').config()
 
 const app = express()
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL, //activate CORS thi moi ket noi api tu backend den frontend
     credentials: true, // mirroring the true value from CORS npm
 }))
 app.use(cookieParser())

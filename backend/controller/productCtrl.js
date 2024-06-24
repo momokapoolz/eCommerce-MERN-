@@ -85,7 +85,7 @@ async function updateProduct(req, res) {
     }
 }
 
-async function allproduct(req, res){
+async function allproduct(req, res) {
     try {
         const product = await productModel.find()
 
@@ -100,15 +100,15 @@ async function allproduct(req, res){
 }
 
 
-async function getAllProductsWithCategory(req, res){
+async function getAllProductsWithCategory(req, res) {
     try {
         const productCategory = await productModel.distinct("category")
 
         const productByCategory = []
 
-        for(const category of productCategory){
-            const product = await productModel.findOne({category: category})
-            if(product){
+        for (const category of productCategory) {
+            const product = await productModel.findOne({ category: category })
+            if (product) {
                 productByCategory.push()
             }
         }
@@ -126,4 +126,34 @@ async function getAllProductsWithCategory(req, res){
     }
 }
 
-module.exports = { uploadProduct, updateProduct , allproduct, getAllProductsWithCategory}
+
+async function getProductsByCategory(req, res) {
+    //get product by category
+    //hint: find(category), category = req?.body
+    try {
+        const {category} = req?.body
+
+        const findPro = await productModel.find({ category })
+
+        //Luu y: dunf method post cho module nay
+
+        //define a new route in backend and frontend
+
+
+        //create a new file in frontend : horizontal card product, su dung file nay tronng file Home de no hien thi ra trang chu
+
+        res.json({
+            data: findPro,
+            success: true,
+            error: false,
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+
+    //create a new func to call this module api in helper frontend, then use it in horinzontal card
+
+}
+
+module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory }

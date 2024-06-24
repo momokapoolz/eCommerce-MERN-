@@ -10,7 +10,7 @@ import UpdateProduct from '../components/updateProduct'
 
 import UploadProduct from '../components/uploadProduct'
 
-const AllProducts = (fetchData) => {
+const AllProducts = (/*fetchData*/) => {
 
     const [allProducts, setProducts] = useState([])
     const [openUpdateProducts, setOpenUpdateProducts] = useState(false)
@@ -34,7 +34,7 @@ const AllProducts = (fetchData) => {
 
         if (data.success) {
             setProducts(data.data); // day chinh la ly do tai sao all user o duoi html lai dung duoc
-            fetchData()
+            //fetchData()
         }
 
         if (data.error) {
@@ -60,6 +60,7 @@ const AllProducts = (fetchData) => {
             <table className='w-full userTable'>
                 <thead>
                     <tr className='bg-black text-white'>
+                        <th>Number</th>
                         <th>Product Name</th>
                         <th>Product Brand</th>
                         <th>Product Category</th>
@@ -74,8 +75,9 @@ const AllProducts = (fetchData) => {
                                 <tr>
                                     <td>{index + 1}</td>
                                     <td>{el?.name}</td>
-                                    <td>{el?.email}</td>
-                                    <td>{el?.role}</td>
+                                    <td>{el?.brand}</td>
+                                    <td>{el?.category}</td>
+                                    <td>${el?.price}</td>
                                     <td>
                                         <button className='bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green-500 hover:text-white' onClick={() => {
 

@@ -3,7 +3,7 @@ const router = express.Router()
 
 const {signUp, LogIn, UserDetail, LogOut, getAllUser, updateUser} = require('../controller/userCtrl')
 
-const {uploadProduct, updateProduct, allproduct, getAllProductsWithCategory} = require('../controller/productCtrl')
+const {uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory} = require('../controller/productCtrl')
 
 const authToken = require('../middleware/authToken')
 
@@ -20,7 +20,8 @@ router.put("/update-user", authToken, updateUser)
 router.post("/upload-product", authToken, uploadProduct)
 router.put("/update-product", authToken, updateProduct)
 router.get("/all-products", allproduct)
-router.get("/get-product-by-category", getAllProductsWithCategory)
+router.get("/get-all-product-by-category", getAllProductsWithCategory)
+router.post("/get-products-by-category", getProductsByCategory)
 
 
 module.exports = router

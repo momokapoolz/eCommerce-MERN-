@@ -8,10 +8,10 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { toast } from 'react-toastify'
 
-const UpdateProduct = (
+const UpdateProduct = ({
     onClose,
     fetchData
-) => {
+}) => {
 
 
     const [data, setData] = useState({
@@ -56,6 +56,7 @@ const UpdateProduct = (
         const responseData = await response.json()
 
         if (responseData.success) {
+            setData(responseData)
             toast.success(responseData?.message)
             onClose()
             fetchData()
@@ -89,13 +90,14 @@ const UpdateProduct = (
     
 
 
+
     return (
         <div className='fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
             <div className='bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden'>
 
                 <div className='flex justify-between items-center pb-3'>
                     <h2 className='font-bold text-lg'>Update Product</h2>
-                    <div className='w-fit ml-auto text-2xl hover:text-green-600 cursor-pointer' onClick={onClose}>
+                    <div className='w-fit ml-auto text-2xl hover:text-red-600 cursor-pointer' onClick={onClose}>
                         <CgClose />
                     </div>
                 </div>
@@ -150,31 +152,35 @@ const UpdateProduct = (
                     </label>
                     <div>
                         {
-                            <div className='flex items-center gap-2'>
-                                {
-                                    data.productImage.map((el, index) => {
-                                        return (
-                                            <div className='relative group'>
-                                                <img
-                                                    src={el}
-                                                    alt={el}
-                                                    width={80}
-                                                    height={80}
-                                                    className='bg-slate-100 border cursor-pointer'
-                                                    onClick={() => {
-                                                        setOpenFullScreenImage(true)
-                                                        setFullScreenImage(el)
-                                                    }} />
+                            data?.productImage[0] ? (
+                                <div className='flex items-center gap-2'>
+                                    {
+                                        data.productImage.map((el, index) => {
+                                            return (
+                                                <div className='relative group'>
+                                                    <img
+                                                        src={el}
+                                                        alt={el}
+                                                        width={80}
+                                                        height={80}
+                                                        className='bg-slate-100 border cursor-pointer'
+                                                        onClick={() => {
+                                                            setOpenFullScreenImage(true)
+                                                            setFullScreenImage(el)
+                                                        }} />
 
-                                                <div className='absolute bottom-0 right-0 p-1 text-white bg-red-600 rounded-full hidden group-hover:block cursor-pointer' onClick={() => handleDeleteProductImage(index)}>
-                                                    <MdDelete />
+                                                    <div className='absolute bottom-0 right-0 p-1 text-white bg-red-600 rounded-full hidden group-hover:block cursor-pointer' onClick={() => handleDeleteProductImage(index)}>
+                                                        <MdDelete />
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                        )
-                                    })
-                                }
-                            </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            ) : (
+                                <p className='text-red-600 text-xs'>*Please upload product image</p>
+                            )
                         }
 
                     </div>
@@ -199,7 +205,7 @@ const UpdateProduct = (
 
 
             {/***display image full screen */}
-            
+
 
 
         </div>
