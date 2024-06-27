@@ -153,7 +153,22 @@ async function getProductsByCategory(req, res) {
     }
 
     //create a new func to call this module api in helper frontend, then use it in horinzontal card
-
 }
 
-module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory }
+async function getProductDetails(req, res){
+    try {
+        const {productID} = req.body
+
+        const productDetail = productModel.findById(productID)
+
+        res.json({
+            data: productDetail,
+            success: true,
+            error: false,
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory, getProductDetails}
