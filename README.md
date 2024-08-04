@@ -43,3 +43,6 @@ Contributions are welcome! Please follow our contributing guidelines.
 
 License
 This project is licensed under the MIT License.
+
+
+//Loi 31 error o productDetail

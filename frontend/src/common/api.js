@@ -49,7 +49,15 @@ const summaryAPI = {
     getProductDetails:{
         url: `${backendDomain}/api/product-details`,
         method: 'post'
+    },
+    deleteProduct:{
+        url: `${backendDomain}/api/delete-product`,
+        method: 'delete'
     }
+    // addToCart:{
+    //     url: `${backendDomain}/api/add-to-cart`,
+    //     method: 'post'
+    // }
 }
 
 export default summaryAPI

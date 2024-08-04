@@ -1,4 +1,6 @@
 const userModel = require('../model/userModel')
+//const cartProductModel = require('../model/cartProductModel')
+
 //import userModel from '../model/userModel';
 
 const bcrypt = require('bcryptjs');
@@ -40,7 +42,7 @@ async function signUp(req, res) {
             })
         }
 
-        else{
+        else {
             throw new Error("User already existed")
         }
 
@@ -52,7 +54,7 @@ async function signUp(req, res) {
 
 
 //login
-async function LogIn(req,res) {
+async function LogIn(req, res) {
     try {
         const { email, password } = req.body
 
@@ -60,24 +62,24 @@ async function LogIn(req,res) {
 
         const findUser = await userModel.findOne({ email: email })
 
-        if (!findUser){
+        if (!findUser) {
             throw new Error("User doesn't exist")
         }
         else {
-            const isMatch = await bcrypt.compare(password, findUser.password)  
-        
-            if(!isMatch){
+            const isMatch = await bcrypt.compare(password, findUser.password)
+
+            if (!isMatch) {
                 console.log("Wrong password")
             }
             else {
                 console.log(isMatch)
 
                 const tokenData = {
-                    _id : findUser._id,
+                    _id: findUser._id,
                     email: findUser.email
                 }
 
-                const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, {expiresIn: 60 * 60 * 8})
+                const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: 60 * 60 * 8 })
 
                 const tokenOption = {
                     httpOnly: true,
@@ -93,7 +95,7 @@ async function LogIn(req,res) {
                     message: "User login successfully!"
                 })
 
-                
+
             }
         }
     } catch (error) {
@@ -102,9 +104,9 @@ async function LogIn(req,res) {
 }
 
 
-async function UserDetail (req, res) {
+async function UserDetail(req, res) {
     try {
-        console.log("userId",req.userId)
+        console.log("userId", req.userId)
         const user = await userModel.findById(req.userId)
 
         res.status(200).json({
@@ -121,14 +123,14 @@ async function UserDetail (req, res) {
 }
 
 
-async function LogOut (req, res) {
+async function LogOut(req, res) {
     try {
         res.clearCookie("token")
 
         res.json({
-            data: [], 
-            error: false,  
-            success: true,  
+            data: [],
+            error: false,
+            success: true,
             message: 'Logout Successfully'
         })
     } catch (error) {
@@ -137,16 +139,16 @@ async function LogOut (req, res) {
 }
 
 
-async function getAllUser (req, res) {
+async function getAllUser(req, res) {
     try {
         console.log("get all user")
 
         const allUser = await userModel.find()
 
         res.json({
-            data: allUser, 
-            error: false,  
-            success: true,  
+            data: allUser,
+            error: false,
+            success: true,
             message: 'Logout Successfully'
         })
     } catch (error) {
@@ -155,16 +157,16 @@ async function getAllUser (req, res) {
 }
 
 
-async function updateUser (req, res) {
+async function updateUser(req, res) {
     try {
         const sessionUser = req.userId
 
-        const {userId, name, email, role} = req.body
+        const { userId, name, email, role } = req.body
 
         const payload = {
-            ...( email && { email : email}),
-            ...( name && { name : name}),
-            ...( role && { role : role}),
+            ...(email && { email: email }),
+            ...(name && { name: name }),
+            ...(role && { role: role }),
         }
 
         const user = await userModel.findById(sessionUser)
@@ -174,9 +176,9 @@ async function updateUser (req, res) {
         const updateUser = await userModel.findByIdAndUpdate(userId, payload)
 
         res.json({
-            data: updateUser, 
-            error: false,  
-            success: true,  
+            data: updateUser,
+            error: false,
+            success: true,
             message: 'Logout Successfully'
         })
 
@@ -186,6 +188,51 @@ async function updateUser (req, res) {
 }
 
 
+// async function addToCart(req, res) {
+//     try {
+//         const productId = req?.body
+//         const currentUser = req.userId
+
+//         const isProductAvailable = await cartProductModel.findOne({ productId })
+
+//         console.log("isProductAvailable   ", isProductAvailable)
+
+//         if (isProductAvailable) {
+//             return res.json({
+//                 message: "Already exits in Add to cart",
+//                 success: false,
+//                 error: true
+//             })
+//         }
+
+//         const payload = {
+//             productId: productId,
+//             quantity: 1,
+//             userId: currentUser,
+//         }
+
+//         const newAddToCart = new addToCartModel(payload)
+//         const saveProduct = await newAddToCart.save()
 
 
-module.exports = { signUp, LogIn, UserDetail, LogOut, getAllUser, updateUser};
+//         return res.json({
+//             data: saveProduct,
+//             message: "Product Added in Cart",
+//             success: true,
+//             error: false
+//         })
+
+
+//     } catch (error) {
+//         res.json({
+//             data: error,
+//             error: true,
+//             success: false,
+//             //message: 'Logout Successfully'
+//         })
+//     }
+// }
+
+
+
+module.exports = { signUp, LogIn, UserDetail, LogOut, getAllUser, updateUser };

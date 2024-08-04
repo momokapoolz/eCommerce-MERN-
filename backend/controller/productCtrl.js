@@ -49,37 +49,53 @@ async function updateProduct(req, res) {
 
         const user = await userModel.findById(sessionUser)
 
-        if (user.role === 'ADMIN') {
-            const _id = req.body
+        if (user.role === 'Admin') {
 
-            const { name, brand, category, price, productImage } = req.body
+            const { _id, ...resBody } = req.body
 
-            const payload = {
-                name: name,
-                brand: brand,
-                category: category,
-                price: price,
-                productImage: productImage
-            }
+            const updateProduct = await productModel.findByIdAndUpdate(_id, resBody)
 
-            const updateproduct = await productModel.findByIdAndUpdate(_id, payload)
-
-            res.status(201).json({
-                data: updateproduct,
+            res.json({
+                message: "Product update successfully",
+                data: updateProduct,
                 success: true,
-                error: false,
-                message: "Product created successfully!"
+                error: false
             })
+
+
         } else {
-            res.status(401).json({
-                data: null,
-                success: false,
-                error: true,
-                message: "You are not authorized to perform this action!"
-            })
+            throw new Error("Permission denied")
         }
 
 
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function deleteProduct(req, res) {
+    try {
+        const sessionUser = req.userId
+
+        const user = await userModel.findById(sessionUser)
+
+        if (user.role === 'Admin') {
+
+            const { _id, ...resBody } = req.body
+
+            const updateProduct = await productModel.findByIdAndDelete(_id, resBody)
+            
+            res.json({
+                message: "Product update successfully",
+                data: updateProduct,
+                success: true,
+                error: false
+            })
+
+
+        } else {
+            throw new Error("Permission denied")
+        }
     } catch (error) {
         console.log(error)
     }
@@ -131,7 +147,7 @@ async function getProductsByCategory(req, res) {
     //get product by category
     //hint: find(category), category = req?.body
     try {
-        const {category} = req?.body
+        const { category } = req?.body
 
         const findPro = await productModel.find({ category })
 
@@ -155,11 +171,11 @@ async function getProductsByCategory(req, res) {
     //create a new func to call this module api in helper frontend, then use it in horinzontal card
 }
 
-async function getProductDetails(req, res){
+async function getProductDetails(req, res) {
     try {
-        const {productID} = req.body
+        const { productId } = req.body ///hoa ra la may :)))
 
-        const productDetail = productModel.findById(productID)
+        const productDetail = await productModel.findById(productId)
 
         res.json({
             data: productDetail,
@@ -171,4 +187,4 @@ async function getProductDetails(req, res){
     }
 }
 
-module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory, getProductDetails}
+module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory, getProductDetails ,deleteProduct}

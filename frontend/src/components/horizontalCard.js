@@ -3,6 +3,7 @@ import fetchGetProductsByCategory from '../helpers/fetchGetProductsByCategory'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import { createContext } from "react";
+//import addToCart from '../helpers/addToCart';
 
 
 
@@ -39,6 +40,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
     const scrollLeft = () => {
         scrollElement.current.scrollLeft -= 300
     }
+
+
+    // const handleAddToCart = async(e,id)=>{
+    //     await addToCart(e,id)
+    // }
 
 
     return (
@@ -85,7 +91,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                                         <p>{(product?.price)}$</p>
                                     
                                     </div>
-                                    <button className='text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full'>Add to Cart</button>
+                                    <button className='text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full' /*onClick={(e)=>handleAddToCart(e,product?._id)}*/>Add to Cart</button>
                                 </div>
                             </Link>
                         )

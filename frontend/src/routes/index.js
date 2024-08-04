@@ -45,13 +45,13 @@ const router = createBrowserRouter ([
                         element: <AllUsers />
                     },{
                         path: "all-products",
-                        element: <AllProducts/>
+                        element: <AllProducts/>,
                     }
                 ]
             },
             {
                 path:"product/:id",
-                element:<ProductDetails/>
+                element:<ProductDetails />
                 
             }
             
