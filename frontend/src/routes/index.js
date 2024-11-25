@@ -9,6 +9,8 @@ import AllUsers from '../pages/allUser'
 import AllProducts from '../pages/allProduct'
 import CategoryProduct from '../pages/categoryProducts'
 import ProductDetails from '../pages/productDetails'
+import SearchProduct from '../pages/searchProduct'
+import SortPrice from '../pages/sortPrice'
 
 
 const router = createBrowserRouter ([
@@ -53,7 +55,16 @@ const router = createBrowserRouter ([
                 path:"product/:id",
                 element:<ProductDetails />
                 
-            }
+            },
+            {
+                path: "search",
+                element:<SearchProduct/>
+            },
+            {
+                path: "sort-price",
+                element:<SortPrice/>
+            },
+            
             
         ]
 

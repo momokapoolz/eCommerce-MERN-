@@ -113,7 +113,7 @@ const UpdateProduct = ({
                         type='text'
                         id='name'
                         placeholder='enter product name'
-                        name='productName'
+                        name='name'
                         value={data.name}
                         onChange={handleOnChange}
                         className='p-2 bg-slate-100 border rounded'
@@ -127,7 +127,7 @@ const UpdateProduct = ({
                         id='brand'
                         placeholder='enter brand name'
                         value={data.brand}
-                        name='brandName'
+                        name='brand'
                         onChange={handleOnChange}
                         className='p-2 bg-slate-100 border rounded'
                         

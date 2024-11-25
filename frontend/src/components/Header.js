@@ -41,8 +41,24 @@ const Header = () => {
         if (data.error) {
             toast.error(data.message)
         }
+    }
 
 
+    const searchProduct = async() =>{
+        const fetchData = await fetch(summaryAPI.searchProduct.url, {
+            method: summaryAPI.searchProduct.method,
+            credentials: 'include'
+        })
+
+        const data = await fetchData.json()
+
+        if (data.success) {
+            toast.success(data.message)
+        }
+
+        if (data.error) {
+            toast.error(data.message)
+        }
 
     }
 
@@ -57,14 +73,16 @@ const Header = () => {
                 </div>
 
 
+                <Link to={"/search"}>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>< GrSearch/></button>
+                </Link>
 
-                <div className='flex items-center w-full justify-between max-w-sm border rounded-full focus-within: shadow-md'>
-                    <input type='text' placeholder='  Search product here...' className='w-full outline-none' />
-                    <div className='text-lg min-w-[50px] h-8 bg-blue-600 flex items-center justify-center rounded-r-full'>
-                        <GrSearch />
-                    </div>
 
-                </div>
+                <Link to={"/sort-price"}>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>Sort by price</button>
+                </Link>
+
+
 
 
 

@@ -187,4 +187,34 @@ async function getProductDetails(req, res) {
     }
 }
 
-module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory, getProductDetails ,deleteProduct}
+async function searchProduct(req, res) {
+    try {
+        const { keyword } = req.body
+        const searchProduct = await productModel.find({ name : new RegExp(keyword , "i") });
+
+        res.json({
+            data: searchProduct,
+            success: true,
+            error: false,
+        })
+
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+
+async function sortPrice (req, res){
+    try {
+        const sortPrice =  await productModel.find().sort({ price : 1 })
+        res.json({
+            data: sortPrice,
+            success: true,
+            error: false,
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { uploadProduct, updateProduct, allproduct, getAllProductsWithCategory, getProductsByCategory, getProductDetails ,deleteProduct, searchProduct, sortPrice}
